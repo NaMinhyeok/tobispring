@@ -31,4 +31,28 @@ public class Payment {
             ", validUntil=" + validUntil +
             '}';
     }
+
+    public BigDecimal getExRate() {
+        return exRate;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public BigDecimal getForeignCurrencyAmount() {
+        return foreignCurrencyAmount;
+    }
+
+    public BigDecimal getConvertedAmount() {
+        return convertedAmount;
+    }
+
+    public LocalDateTime getValidUntil() {
+        return validUntil;
+    }
 }
