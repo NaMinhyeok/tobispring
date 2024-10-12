@@ -36,7 +36,7 @@ class PaymentServiceSpringTest {
 
     @DisplayName("Spring을 이용한 테스트")
     @Test
-    void test() throws IOException {
+    void test() {
 
         Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
 
@@ -51,7 +51,7 @@ class PaymentServiceSpringTest {
 
     @DisplayName("Spring을 이용한 테스트용 스텁을 이용한 테스트")
     @Test
-    void stubTest() throws IOException {
+    void stubTest() {
         exRateProviderStub.setExRate(BigDecimal.valueOf(500));
 
         Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
@@ -67,7 +67,7 @@ class PaymentServiceSpringTest {
 
     @DisplayName("유효시간 계산")
     @Test
-    void validUntil() throws IOException {
+    void validUntil() {
         Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
 
         LocalDateTime now = LocalDateTime.now(clock);
@@ -76,7 +76,7 @@ class PaymentServiceSpringTest {
         Assertions.assertThat(payment.getValidUntil()).isEqualTo(expectedValidUntil);
     }
 
-    private void testAmount(BigDecimal exRate, BigDecimal convertedAmount) throws IOException {
+    private void testAmount(BigDecimal exRate, BigDecimal convertedAmount) {
         PaymentService paymentService = new PaymentService(new ExRateProviderStub(exRate),testPaymentConfig.clock());
 
         Payment payment = paymentService.prepare(10L, "USD", BigDecimal.TEN);

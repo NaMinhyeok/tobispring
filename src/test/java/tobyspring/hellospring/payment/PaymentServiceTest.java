@@ -25,7 +25,7 @@ class PaymentServiceTest {
     }
 
     @Test
-    void prepare() throws IOException {
+    void prepare() {
         Clock clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
         PaymentService paymentService = new PaymentService(new WebApiExRateProvider(),clock);
 
@@ -45,7 +45,7 @@ class PaymentServiceTest {
 
     @DisplayName("stub을 이용한 테스트")
     @Test
-    void test() throws IOException {
+    void test() {
 
         testAmount(BigDecimal.valueOf(500),BigDecimal.valueOf(5_000),this.clock);
         testAmount(BigDecimal.valueOf(1_000),BigDecimal.valueOf(10_000),this.clock);
@@ -58,7 +58,7 @@ class PaymentServiceTest {
 
     @DisplayName("유효시간 계산")
     @Test
-    void validUntil() throws IOException {
+    void validUntil() {
         PaymentService paymentService = new PaymentService(new ExRateProviderStub(BigDecimal.valueOf(1_000)), clock);
 
         Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
@@ -69,7 +69,7 @@ class PaymentServiceTest {
         Assertions.assertThat(payment.getValidUntil()).isEqualTo(expectedValidUntil);
     }
 
-    private void testAmount(BigDecimal exRate, BigDecimal convertedAmount, Clock clock) throws IOException {
+    private void testAmount(BigDecimal exRate, BigDecimal convertedAmount, Clock clock)  {
         PaymentService paymentService = new PaymentService(new ExRateProviderStub(exRate),clock);
 
         Payment payment = paymentService.prepare(10L, "USD", BigDecimal.TEN);

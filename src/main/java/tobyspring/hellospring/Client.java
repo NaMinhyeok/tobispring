@@ -8,7 +8,7 @@ import tobyspring.hellospring.payment.PaymentService;
 import java.math.BigDecimal;
 
 public class Client {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         BeanFactory beanFactory = new AnnotationConfigApplicationContext(PaymentConfig.class);
         PaymentService paymentService = beanFactory.getBean(PaymentService.class);
 

@@ -23,7 +23,7 @@ class PaymentTest {
 
     @DisplayName("payment 생성 테스트")
     @Test
-    void createPrepared() throws IOException {
+    void createPrepared() {
         //given
         Clock clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
 
@@ -37,7 +37,7 @@ class PaymentTest {
 
     @DisplayName("validateion 테스트")
     @Test
-    void test() throws IOException {
+    void test() {
         //given
         Clock clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
         Payment payment = Payment.createPrepared(1L,"USD", BigDecimal.ONE, LocalDateTime.now(clock), exRateProvider);
