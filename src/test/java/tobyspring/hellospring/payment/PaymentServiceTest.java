@@ -4,16 +4,16 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import tobyspring.hellospring.api.ApiTemplate;
 import tobyspring.hellospring.exrate.WebApiExRateProvider;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class PaymentServiceTest {
 
@@ -27,7 +27,7 @@ class PaymentServiceTest {
     @Test
     void prepare() {
         Clock clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
-        PaymentService paymentService = new PaymentService(new WebApiExRateProvider(),clock);
+        PaymentService paymentService = new PaymentService(new WebApiExRateProvider(new ApiTemplate()), clock);
 
         Payment payment = paymentService.prepare(1L, "USD", BigDecimal.ONE);
 
@@ -47,9 +47,9 @@ class PaymentServiceTest {
     @Test
     void test() {
 
-        testAmount(BigDecimal.valueOf(500),BigDecimal.valueOf(5_000),this.clock);
-        testAmount(BigDecimal.valueOf(1_000),BigDecimal.valueOf(10_000),this.clock);
-        testAmount(BigDecimal.valueOf(3_000),BigDecimal.valueOf(30_000),this.clock);
+        testAmount(BigDecimal.valueOf(500), BigDecimal.valueOf(5_000), this.clock);
+        testAmount(BigDecimal.valueOf(1_000), BigDecimal.valueOf(10_000), this.clock);
+        testAmount(BigDecimal.valueOf(3_000), BigDecimal.valueOf(30_000), this.clock);
 
         // 원화 환산금액의 유효시간 계산
 //        assertThat(payment.getValidUntil()).isAfter(LocalDateTime.now());
@@ -69,8 +69,8 @@ class PaymentServiceTest {
         Assertions.assertThat(payment.getValidUntil()).isEqualTo(expectedValidUntil);
     }
 
-    private void testAmount(BigDecimal exRate, BigDecimal convertedAmount, Clock clock)  {
-        PaymentService paymentService = new PaymentService(new ExRateProviderStub(exRate),clock);
+    private void testAmount(BigDecimal exRate, BigDecimal convertedAmount, Clock clock) {
+        PaymentService paymentService = new PaymentService(new ExRateProviderStub(exRate), clock);
 
         Payment payment = paymentService.prepare(10L, "USD", BigDecimal.TEN);
 
